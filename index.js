@@ -20,8 +20,8 @@ let notes = [
   ]
 
 const app = http.createServer((request, response) => {
-  response.writeHead(200, { 'Content-Type': 'text/html' })
-  response.end('<h1> Hello World <h1>')
+  response.writeHead(200, { 'Content-Type': 'text/JSON' })
+  response.end(JSON.stringify(notes))
 })
 
 const PORT = 3001
