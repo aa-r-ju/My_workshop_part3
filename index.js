@@ -3,6 +3,16 @@ const app = express()
 
 app.use(express.json())
 
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+  }
+
+  app.use(requestLogger)
+
 let notes = [
     {
       id: 1,
@@ -57,6 +67,11 @@ app.post("/api/notes",(request, response) => {
     notes.push(myNewPost)
     response.status(201).json(myNewPost)
 })
+
+app.use((request, response, next) => {
+response.status(404).send("no code available to handle this request")
+    next()
+  })
 
 const PORT = 3001
 app.listen(PORT)
