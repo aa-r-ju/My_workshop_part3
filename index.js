@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
 
 let notes = [
     {
@@ -42,6 +43,20 @@ app.get("/api/notes",(request, response) => {
 }
   })
 
+  app.delete("/api/notes/:id",(request, response) => {
+    const myId = Number(request.params.id)
+     notes = notes.filter(note => note.id !== myId)
+
+    response.status(204).send(`The note at id ${myId} has been delete`)
+})
+
+
+app.post("/api/notes",(request, response) => {
+    const myNewPost = request.body
+    myNewPost.id = notes.length + 1
+    notes.push(myNewPost)
+    response.status(201).json(myNewPost)
+})
 
 const PORT = 3001
 app.listen(PORT)
