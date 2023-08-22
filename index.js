@@ -33,8 +33,15 @@ app.get("/api/notes",(request, response) => {
 
   app.get("/api/notes/:id",(request, response) => {
     const myId = Number(request.params.id)
-    response.json(notes.find(note => note.id === myId))
+    const myNOte = notes.find(note => note.id === myId)
+
+    if(myNOte){
+    response.json(myNOte)
+}   else {
+    response.status(404).send(`There is no notes at ${myId}`)
+}
   })
+
 
 const PORT = 3001
 app.listen(PORT)
